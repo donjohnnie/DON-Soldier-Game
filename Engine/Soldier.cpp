@@ -886,7 +886,7 @@ void Soldier::Update(Keyboard & kbd, float dt)
 		ClampToScreen();
 		if (!ps.empty())
 		{
-			checkOut();
+			checkOut(ps);
 		}
 		Vec2 vel(0.0f, 0.0f);
 		if (kbd.KeyIsPressed(VK_RIGHT))
@@ -928,14 +928,25 @@ void Soldier::UpdateProj(float dt)
 	}
 }
 
-
-void Soldier::checkOut()
+void Soldier::CheckAttack(Keyboard & kbd)
 {
-	for (int i = 0; i < ps.size(); i++)
+	if (!isDead())
 	{
-		if (ps[i].isOut())
+		if (kbd.KeyIsPressed(VK_NUMPAD4))
 		{
-			ps.erase(ps.begin() + i);
+			ps.push_back(Projectile((GetCenter()), Vec2(-1.0f, 0.0f), c));
+		}
+		if (kbd.KeyIsPressed(VK_NUMPAD6))
+		{
+			ps.push_back(Projectile((GetCenter()), Vec2(1.0f, 0.0f), c));
+		}
+		if (kbd.KeyIsPressed(VK_NUMPAD8))
+		{
+			ps.push_back(Projectile((GetCenter()), Vec2(0.0f, -1.0f), c));
+		}
+		if (kbd.KeyIsPressed(VK_NUMPAD5))
+		{
+			ps.push_back(Projectile((GetCenter()), Vec2(0.0f, 1.0f), c));
 		}
 	}
 }

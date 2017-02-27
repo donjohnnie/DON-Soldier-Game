@@ -9,48 +9,23 @@
 
 class Soldier
 {
-
 public:
 	Soldier() = default;
 	Soldier(Vec2& in) : pos(in) { }
+	Soldier(const float& xx, const float& yy) :Soldier(Vec2(xx, yy)) { }
 
+	// Update & Draw Functions;
 	void Draw(Graphics& gfx) const;
 	void DrawProj(Graphics& gfx) const;
 	void Update(Keyboard& kbd, float dt);
 	void UpdateProj(float dt);
-	void CheckAttack(Keyboard& kbd)
-	{
-		if (!isDead())
-		{
-			if (kbd.KeyIsPressed(VK_NUMPAD4))
-			{
-				ps.push_back(Projectile((GetCenter()), Vec2(-1.0f, 0.0f), c));
-			}
-			if (kbd.KeyIsPressed(VK_NUMPAD6))
-			{
-				ps.push_back(Projectile((GetCenter()), Vec2(1.0f, 0.0f), c));
-			}
-			if (kbd.KeyIsPressed(VK_NUMPAD8))
-			{
-				ps.push_back(Projectile((GetCenter()), Vec2(0.0f, -1.0f), c));
-			}
-			if (kbd.KeyIsPressed(VK_NUMPAD5))
-			{
-				ps.push_back(Projectile((GetCenter()), Vec2(0.0f, 1.0f), c));
-			}
-		}
-	}
-
-	std::vector<Projectile>& bullets() { return ps; }
-	void checkOut();
-
-	const RectF GetRect() const
-	{
-		return RectF::MakeRect(pos, width, height);
-	}
+	void CheckAttack(Keyboard& kbd);
 	void ClampToScreen();
 
+	// Utility Functions;
 	Vec2 GetCenter() const { return Vec2(pos.x + width / 2, pos.y + height / 2); }
+	const RectF GetRect() const { return RectF::MakeRect(pos, width, height); }
+	std::vector<Projectile>& bullets() { return ps; }
 
 	bool isDead() const { return dead; }
 	void setDead() { dead = true; }

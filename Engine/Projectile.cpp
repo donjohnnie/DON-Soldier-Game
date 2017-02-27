@@ -31,3 +31,14 @@ void Projectile::outOfBounds()
 		}
 	}
 }
+
+void checkOut(std::vector<Projectile>& ps)
+{
+	for (int i = 0; i < ps.size(); i++)
+	{
+		if (ps[i].isOut())
+		{
+			ps.erase(ps.begin() + i);
+		}
+	}
+}

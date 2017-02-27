@@ -1063,7 +1063,10 @@ void Enemy::Update(float dt, const Soldier& s)
 	if (!isHit())
 	{
 		pos += vel * dt * speed;
-
+		if (!ps.empty())
+		{
+			checkOut(ps);
+		}
 		const float right = pos.x + width;
 		if (pos.x < 0)
 		{
@@ -1168,4 +1171,16 @@ void Enemy::setDodgeTrue()
 void Enemy::setDodgeFalse()
 {
 	canDodge = false;
+}
+
+bool verifySucces(std::vector<Enemy>& v)
+{
+		for (auto& el : v)
+		{
+			if (el.checkSucces())
+			{
+				return true;
+			}
+		}
+		return false;
 }
