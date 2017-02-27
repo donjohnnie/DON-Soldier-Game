@@ -1150,21 +1150,9 @@ void Enemy::evade(Soldier & sol)
 		{
 			if ((el.getPos() - pos).GetLengthSq() <= 65.0f*65.0f)
 			{
-				if (el.getVel().x < 1.0f && vel.x > 1.0f)
-				{
 					vel.y = -vel.y;
 					vel.x = -vel.x;
 					setDodgeFalse();
-				}
-				else
-				{
-					if (el.getVel().x > 1.0f && vel.x < 1.0f)
-					{
-						vel.y = -vel.y;
-						vel.x = -vel.x;
-						setDodgeFalse();
-					}
-				}
 			}
 		}
 	}
