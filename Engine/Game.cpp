@@ -25,8 +25,8 @@ Game::Game(MainWindow& wnd)
 	:
 	wnd(wnd),
 	gfx(wnd),
-	xDist(0,400),
-	yDist(0,400),
+	xDist(50,500),
+	yDist(50,500),
 	rng(e()),
 	soldier(Vec2(500, 500))
 {

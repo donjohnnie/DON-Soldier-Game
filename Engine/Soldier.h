@@ -52,11 +52,6 @@ public:
 
 	Vec2 GetCenter() const { return Vec2(pos.x + width / 2, pos.y + height / 2); }
 
-	void Attack()
-	{
-		ps.push_back(Projectile(GetCenter()));
-	}
-
 	bool isDead() const { return dead; }
 	void setDead() { dead = true; }
 

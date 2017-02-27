@@ -1,7 +1,5 @@
 #include "Soldier.h"
 
-
-
 void Soldier::Draw(Graphics & gfx) const
 {
 	if (!isDead())
@@ -868,10 +866,10 @@ void Soldier::Draw(Graphics & gfx) const
 		gfx.PutPixel(23 + int_x, 46 + int_y, 56, 56, 51);
 		gfx.PutPixel(24 + int_x, 46 + int_y, 49, 49, 44);
 		gfx.PutPixel(25 + int_x, 46 + int_y, 4, 4, 4);
-
 	}
-
 }
+
+
 void Soldier::DrawProj(Graphics & gfx) const
 {
 	for (auto& el : ps)
@@ -879,6 +877,7 @@ void Soldier::DrawProj(Graphics & gfx) const
 		el.Draw(gfx);
 	}
 }
+
 
 void Soldier::Update(Keyboard & kbd, float dt)
 {
@@ -893,22 +892,18 @@ void Soldier::Update(Keyboard & kbd, float dt)
 		if (kbd.KeyIsPressed(VK_RIGHT))
 		{
 			vel.x += 1.0f;
-
 		}
 		if (kbd.KeyIsPressed(VK_LEFT))
 		{
 			vel.x -= 1.0f;
-
 		}
 		if (kbd.KeyIsPressed(VK_DOWN))
 		{
 			vel.y += 1.0f;
-
 		}
 		if (kbd.KeyIsPressed(VK_UP))
 		{
 			vel.y -= 1.0f;
-
 		}
 		pos += vel.GetNormalized() * speed * dt;
 
@@ -921,10 +916,9 @@ void Soldier::Update(Keyboard & kbd, float dt)
 		{
 			actual += dt;
 		}
-
-
 	}
 }
+
 
 void Soldier::UpdateProj(float dt)
 {
@@ -946,9 +940,9 @@ void Soldier::checkOut()
 	}
 }
 
+
 void Soldier::ClampToScreen()
 {
-
 	const float right = pos.x + width;
 	if (pos.x < 0)
 	{
@@ -969,4 +963,3 @@ void Soldier::ClampToScreen()
 		pos.y = float(Graphics::ScreenHeight - 1) - height;
 	}
 }
-
