@@ -27,8 +27,7 @@ Game::Game(MainWindow& wnd)
 	gfx(wnd),
 	xDist(50,500),
 	yDist(50,500),
-	rng(e()),
-	soldier(Vec2(500, 500))
+	rng(e())
 {
 	std::uniform_real_distribution<float> vDist(5.0f, 7.0f);
 	for (int i = 0; i < enemyNum; i++)

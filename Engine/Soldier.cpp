@@ -936,15 +936,15 @@ void Soldier::CheckAttack(Keyboard & kbd)
 		{
 			ps.push_back(Projectile((GetCenter()), Vec2(-1.0f, 0.0f), c));
 		}
-		if (kbd.KeyIsPressed(VK_NUMPAD6))
+		else if (kbd.KeyIsPressed(VK_NUMPAD6))
 		{
 			ps.push_back(Projectile((GetCenter()), Vec2(1.0f, 0.0f), c));
 		}
-		if (kbd.KeyIsPressed(VK_NUMPAD8))
+		else if (kbd.KeyIsPressed(VK_NUMPAD8))
 		{
 			ps.push_back(Projectile((GetCenter()), Vec2(0.0f, -1.0f), c));
 		}
-		if (kbd.KeyIsPressed(VK_NUMPAD5))
+		else if (kbd.KeyIsPressed(VK_NUMPAD5))
 		{
 			ps.push_back(Projectile((GetCenter()), Vec2(0.0f, 1.0f), c));
 		}

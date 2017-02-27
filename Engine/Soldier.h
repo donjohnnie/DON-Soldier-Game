@@ -37,7 +37,7 @@ private:
 	static constexpr float speed = 100.0f;
 	static constexpr float width = 36.0f;
 	static constexpr float height = 49.0f;
-	Vec2 pos;
+	Vec2 pos = Vec2(500.0f,500.0f);
 	std::vector<Projectile> ps;
 
 	bool dead = false;
