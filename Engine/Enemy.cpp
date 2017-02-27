@@ -1095,7 +1095,7 @@ void Enemy::Update(float dt, const Soldier& s)
 		actual += dt;
 		if (actual > cooldown)
 		{
-			ps.push_back(Projectile(GetCenter(), (s.GetCenter() - GetCenter()).GetNormalized()*0.5f, c));
+			ps.push_back(Projectile(GetCenter(), (s.GetCenter() - GetCenter()).GetNormalized()*1.0f, c));
 			actual = 0.0f;
 		}
 	}
@@ -1148,9 +1148,11 @@ void Enemy::evade(Soldier& sol)
 	{
 		for (auto& el : sol.bullets())
 		{
-			if ((el.getPos() - pos).GetLengthSq() <= 65.0f*65.0f)
+			if (!el.isDodged() && (el.getPos() - pos).GetLengthSq() <= 65.0f*65.0f
+				&& !(el.getVel().y < 0 && vel.y < 0)) // now they shouldn't be able to dodge if you get a dick shot
 			{
-				setDodgeFalse();
+				setDodgeFalse(); // enemy can't dodge again until it hits the wall;
+				el.setDodged(); // can't touch this (this bullet is now undodgeable [is that even a word?, well it is now])
 				vel.y = -vel.y;
 				vel.x = -vel.x;
 			}

@@ -51,6 +51,9 @@ private:
 	std::vector<Projectile> ps;
 	bool hit = false;
 	bool succes = false;
+
+	//can dodge a bullet if true; set to false when the Enemy object dodges a Soldier bullet;
+	//set to true whenever it hits a wall;
 	bool canDodge = true;
 
 };

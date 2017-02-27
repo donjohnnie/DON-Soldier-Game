@@ -71,5 +71,4 @@ private:
 	std::vector<Projectile> ps;
 
 	bool dead = false;
-
 };

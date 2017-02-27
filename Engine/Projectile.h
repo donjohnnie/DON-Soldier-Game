@@ -19,6 +19,10 @@ public:
 	Vec2 getPos() const { return pos; }
 	Vec2 getVel() const { return vel; }
 
+	//no twice-dodging functions
+	bool isDodged() const { return dodged; }
+	void setDodged() { dodged = true; }
+
 private:
 	static constexpr float speed = 150.0f;
 	Color c;
@@ -28,5 +32,7 @@ private:
 	Vec2 vel;
 
 	bool out = false;
-	
+
+	//an Enemy can't dodge the same bullet twice, so no more glitching between the edge and a bullet;
+	bool dodged = false;
 };
