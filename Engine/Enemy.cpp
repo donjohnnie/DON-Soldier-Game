@@ -1142,7 +1142,7 @@ void Enemy::HitSoldier(Soldier & sol)
 	}
 }
 
-void Enemy::evade(Soldier & sol)
+void Enemy::evade(Soldier& sol)
 {
 	if (dodgeCheck() && !isHit())
 	{
@@ -1150,9 +1150,9 @@ void Enemy::evade(Soldier & sol)
 		{
 			if ((el.getPos() - pos).GetLengthSq() <= 65.0f*65.0f)
 			{
-					vel.y = -vel.y;
-					vel.x = -vel.x;
-					setDodgeFalse();
+				setDodgeFalse();
+				vel.y = -vel.y;
+				vel.x = -vel.x;
 			}
 		}
 	}

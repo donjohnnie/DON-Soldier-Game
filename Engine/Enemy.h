@@ -6,9 +6,9 @@
 
 class Enemy
 {
-	friend bool verifySucces(std::vector<Enemy> es)
+	friend bool verifySucces(std::vector<Enemy>& v)
 	{
-		for (auto& el : es)
+		for (auto& el : v)
 		{
 			if (el.checkSucces())
 			{
@@ -17,8 +17,6 @@ class Enemy
 		}
 		return false;
 	}
-
-
 public:
 	Enemy() = default;
 	Enemy(const Vec2& v1, const Vec2& v2) : pos(v1), vel(v2) { }

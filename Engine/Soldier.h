@@ -41,8 +41,7 @@ public:
 		}
 	}
 
-	auto& bullets() { return ps; }
-
+	std::vector<Projectile>& bullets() { return ps; }
 	void checkOut();
 
 	const RectF GetRect() const
@@ -70,7 +69,6 @@ private:
 	static constexpr float height = 49.0f;
 	Vec2 pos;
 	std::vector<Projectile> ps;
-	RectF r2;
 
 	bool dead = false;
 
