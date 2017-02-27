@@ -895,10 +895,6 @@ void Soldier::Update(Keyboard & kbd, float dt)
 			vel.x += 1.0f;
 
 		}
-		if (kbd.KeyIsPressed(VK_NUMPAD9))
-		{
-			vel.x += 1.0f;
-		}
 		if (kbd.KeyIsPressed(VK_LEFT))
 		{
 			vel.x -= 1.0f;
