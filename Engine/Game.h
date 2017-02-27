@@ -45,7 +45,6 @@ private:
 	/********************************/
 private:
 	static constexpr int enemyNum = 3;
-	Projectile p1;
 	FrameTimer ft;
 	std::random_device e;
 	std::mt19937 rng;

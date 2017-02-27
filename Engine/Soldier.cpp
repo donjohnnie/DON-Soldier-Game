@@ -914,11 +914,6 @@ void Soldier::Update(Keyboard & kbd, float dt)
 			vel.y -= 1.0f;
 
 		}
-		if (kbd.KeyIsPressed(VK_CONTROL))
-		{
-			vel.y -= 1.0f;
-
-		}
 		pos += vel.GetNormalized() * speed * dt;
 
 		if (actual > cooldown)
