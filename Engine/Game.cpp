@@ -50,7 +50,6 @@ void Game::UpdateModel()
 	if (!verifySucces(enemies))
 	{
 		const auto dt = ft.Mark();
-		actual += dt;
 		soldier.Update(wnd.kbd, dt);
 		soldier.UpdateProj(dt);
 		for (auto& el : enemies)
