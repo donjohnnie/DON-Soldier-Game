@@ -879,12 +879,14 @@ void Soldier::DrawProj(Graphics & gfx) const
 }
 
 
-void Soldier::Update(Keyboard & kbd, float dt)
+void Soldier::Update(Keyboard & kbd, Mouse& mouse, float dt)
 {
 	if (!isDead())
 	{
 		ClampToScreen();
-		CheckAttack(kbd);
+		//CheckAttack(kbd);
+		CheckAttack(mouse);
+		
 		actual += dt;
 
 		if (!ps.empty())
@@ -911,6 +913,8 @@ void Soldier::Update(Keyboard & kbd, float dt)
 		pos += vel.GetNormalized() * speed * dt;
 	}
 }
+
+
 
 
 void Soldier::UpdateProj(float dt)
@@ -966,6 +970,18 @@ void Soldier::CheckAttack(Keyboard & kbd)
 	}
 }
 
+void Soldier::CheckAttack(Mouse & mouse)
+{
+	if (mouse.LeftIsPressed())
+	{
+		if (actual > cooldown)
+		{
+			Vec2 vec = Vec2(mouse.GetPosX(), mouse.GetPosY());
+			ps.push_back(Projectile((GetCenter()), (vec - GetCenter()).GetNormalized()*1.0f, c));
+			actual = 0.0f;
+		}
+	}
+}
 
 void Soldier::ClampToScreen()
 {

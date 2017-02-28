@@ -2,6 +2,7 @@
 #include "Graphics.h"
 #include "Vec2.h"
 #include "Keyboard.h"
+#include "Mouse.h"
 #include "RectF.h"
 #include "Colors.h"
 #include "Projectile.h"
@@ -17,9 +18,10 @@ public:
 	// Update & Draw Functions;
 	void Draw(Graphics& gfx) const;
 	void DrawProj(Graphics& gfx) const;
-	void Update(Keyboard& kbd, float dt);
+	void Update(Keyboard& kbd, Mouse& mouse, float dt);
 	void UpdateProj(float dt);
 	void CheckAttack(Keyboard& kbd);
+	void CheckAttack(Mouse& mouse);
 	void ClampToScreen();
 
 	// Utility Functions;
@@ -31,7 +33,7 @@ public:
 	void setDead() { dead = true; }
 
 private:
-	static constexpr float cooldown = 0.7f;
+	static constexpr float cooldown = 0.5f;
 	float actual = 0.0f;
 	static constexpr Color c = Colors::Red;
 	static constexpr float speed = 100.0f;

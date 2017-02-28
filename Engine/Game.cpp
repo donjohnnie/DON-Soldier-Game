@@ -49,7 +49,7 @@ void Game::UpdateModel()
 	if (!verifySucces(enemies))
 	{
 		const auto dt = ft.Mark();
-		soldier.Update(wnd.kbd, dt);
+		soldier.Update(wnd.kbd, wnd.mouse, dt);
 		soldier.UpdateProj(dt);
 		for (auto& el : enemies)
 		{
