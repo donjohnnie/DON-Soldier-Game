@@ -31,7 +31,7 @@ public:
 	void setDead() { dead = true; }
 
 private:
-	static constexpr float cooldown = 0.5f;
+	static constexpr float cooldown = 0.7f;
 	float actual = 0.0f;
 	static constexpr Color c = Colors::Red;
 	static constexpr float speed = 100.0f;

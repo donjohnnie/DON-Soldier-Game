@@ -884,6 +884,9 @@ void Soldier::Update(Keyboard & kbd, float dt)
 	if (!isDead())
 	{
 		ClampToScreen();
+		CheckAttack(kbd);
+		actual += dt;
+
 		if (!ps.empty())
 		{
 			checkOut(ps);
@@ -906,16 +909,6 @@ void Soldier::Update(Keyboard & kbd, float dt)
 			vel.y -= 1.0f;
 		}
 		pos += vel.GetNormalized() * speed * dt;
-
-		if (actual > cooldown)
-		{
-			CheckAttack(kbd);
-			actual = 0.0f;
-		}
-		else
-		{
-			actual += dt;
-		}
 	}
 }
 
@@ -930,23 +923,45 @@ void Soldier::UpdateProj(float dt)
 
 void Soldier::CheckAttack(Keyboard & kbd)
 {
-	if (!isDead())
+	if (kbd.KeyIsPressed(VK_NUMPAD4))
 	{
-		if (kbd.KeyIsPressed(VK_NUMPAD4))
+		if (actual > cooldown)
 		{
 			ps.push_back(Projectile((GetCenter()), Vec2(-1.0f, 0.0f), c));
+			actual = 0.0f;
 		}
-		else if (kbd.KeyIsPressed(VK_NUMPAD6))
+	}
+	else
+	{
+		if (kbd.KeyIsPressed(VK_NUMPAD6))
 		{
-			ps.push_back(Projectile((GetCenter()), Vec2(1.0f, 0.0f), c));
+			if (actual > cooldown)
+			{
+				ps.push_back(Projectile((GetCenter()), Vec2(1.0f, 0.0f), c));
+				actual = 0.0f;
+			}
 		}
-		else if (kbd.KeyIsPressed(VK_NUMPAD8))
+		else
 		{
-			ps.push_back(Projectile((GetCenter()), Vec2(0.0f, -1.0f), c));
-		}
-		else if (kbd.KeyIsPressed(VK_NUMPAD5))
-		{
-			ps.push_back(Projectile((GetCenter()), Vec2(0.0f, 1.0f), c));
+			if (kbd.KeyIsPressed(VK_NUMPAD8))
+			{
+				if (actual > cooldown)
+				{
+					ps.push_back(Projectile((GetCenter()), Vec2(0.0f, -1.0f), c));
+					actual = 0.0f;
+				}
+			}
+			else
+			{
+				if (kbd.KeyIsPressed(VK_NUMPAD5))
+				{
+					if (actual > cooldown)
+					{
+						ps.push_back(Projectile((GetCenter()), Vec2(0.0f, 1.0f), c));
+						actual = 0.0f;
+					}
+				}
+			}
 		}
 	}
 }
