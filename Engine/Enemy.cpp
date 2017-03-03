@@ -1101,6 +1101,13 @@ void Enemy::Update(float dt, const Soldier& s)
 			ps.push_back(Projectile(GetCenter(), (s.GetCenter() - GetCenter()).GetNormalized()*1.0f, c));
 			actual = 0.0f;
 		}
+		for (auto& el : ps)
+		{
+			if (el.GetRect().IsOverlappingWith(s.shield.GetRect()))
+			{
+				el.setOut();
+			}
+		}
 	}
 }
 
@@ -1151,7 +1158,7 @@ void Enemy::evade(Soldier& sol)
 	{
 		for (auto& el : sol.bullets())
 		{
-			if (!el.isDodged() && (el.getPos() - pos).GetLengthSq() <= 65.0f*65.0f
+			if (!el.isDodged() && (el.getPos() - pos).GetLengthSq() <= 90.0f*90.0f
 				&& !((el.getVel().y < 0 && vel.y < 0) || (el.getVel().y > 0 && vel.y > 0))) // now they shouldn't be able to dodge if you get a dick shot
 			{
 				setDodgeFalse(); // enemy can't dodge again until it hits the wall;

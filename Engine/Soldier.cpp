@@ -878,15 +878,19 @@ void Soldier::DrawProj(Graphics & gfx) const
 	}
 }
 
+void Soldier::DrawShield(Graphics & gfx) const
+{
+	shield.Draw(gfx);
+}
+
 
 void Soldier::Update(Keyboard & kbd, Mouse& mouse, float dt)
 {
 	if (!isDead())
 	{
-		ClampToScreen();
+		ClampToScreenLeft();
 		//CheckAttack(kbd);
 		CheckAttack(mouse);
-		
 		actual += dt;
 
 		if (!ps.empty())
@@ -911,6 +915,7 @@ void Soldier::Update(Keyboard & kbd, Mouse& mouse, float dt)
 			vel.y -= 1.0f;
 		}
 		pos += vel.GetNormalized() * speed * dt;
+		shield.pos += vel.GetNormalized() * speed * dt;
 	}
 }
 
@@ -925,6 +930,11 @@ void Soldier::UpdateProj(float dt)
 	}
 }
 
+void Soldier::UpdateShield()
+{
+	shield.pos.x = pos.x - Shield::width;
+	shield.pos.y = pos.y + height / 3;
+}
 void Soldier::CheckAttack(Keyboard & kbd)
 {
 	if (kbd.KeyIsPressed(VK_NUMPAD4))
@@ -976,32 +986,42 @@ void Soldier::CheckAttack(Mouse & mouse)
 	{
 		if (actual > cooldown)
 		{
-			Vec2 vec = Vec2(mouse.GetPosX(), mouse.GetPosY());
-			ps.push_back(Projectile((GetCenter()), (vec - GetCenter()).GetNormalized()*1.0f, c));
+			Vec2 vec = Vec2(float(mouse.GetPosX()), float(mouse.GetPosY()));
+			ps.push_back(Projectile((GetCenter()), (vec - GetCenter()).GetNormalized()*0.75f, c));
 			actual = 0.0f;
 		}
 	}
 }
 
-void Soldier::ClampToScreen()
+void Soldier::ClampToScreenLeft ()
 {
 	const float right = pos.x + width;
-	if (pos.x < 0)
+	const float shieldRight = shield.pos.x + Shield::width;
+
+	if (pos.x < 0.0f + Shield::width + Shield::distance)
 	{
-		pos.x = 0;
+		pos.x = 0.0f + Shield::width + Shield::distance;
 	}
-	else if (right >= float(Graphics::ScreenWidth))
+	if (shield.pos.x < 0.0f)
 	{
-		pos.x = float(Graphics::ScreenWidth - 1) - width;
+		shield.pos.x = 0.0f;
+	}
+
+	if (right >= Graphics::ScreenWidth)
+	{
+		pos.x = (Graphics::ScreenWidth - 1) - width;
 	}
 
 	const float bottom = pos.y + height;
-	if (pos.y < 0)
+	const float shieldBottom = shield.pos.y + Shield::height;
+
+	if (pos.y < 0 )
 	{
 		pos.y = 0;
 	}
-	else if (bottom >= float(Graphics::ScreenHeight))
+	else if (bottom >= float(Graphics::ScreenHeight) )
 	{
 		pos.y = float(Graphics::ScreenHeight - 1) - height;
 	}
+	UpdateShield();
 }

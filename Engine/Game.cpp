@@ -67,6 +67,7 @@ void Game::ComposeFrame()
 	if (!verifySucces(enemies))
 	{
 		soldier.Draw(gfx);
+		soldier.DrawShield(gfx);
 		soldier.DrawProj(gfx);
 		for (auto& el : enemies)
 		{
