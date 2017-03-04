@@ -880,16 +880,31 @@ void Soldier::DrawProj(Graphics & gfx) const
 
 void Soldier::DrawShield(Graphics & gfx) const
 {
+	if(shield.dir!=Shield::Direction::NotUsed)
+	{
 	shield.Draw(gfx);
 }
-
+}
 
 void Soldier::Update(Keyboard & kbd, Mouse& mouse, float dt)
 {
 	if (!isDead())
 	{
-		ClampToScreenLeft();
-		//CheckAttack(kbd);
+		switch (shield.dir)
+		{
+		case Shield::Direction::Left:
+			ClampToScreenLeft();
+			break;
+		case Shield::Direction::Right:
+			ClampToScreenRight();
+			break;
+		default:
+			ClampToScreen();
+			break;
+		}
+
+		//CheckAttack(kbd); unchecked for using mouse controls
+
 		CheckAttack(mouse);
 		actual += dt;
 
@@ -898,6 +913,7 @@ void Soldier::Update(Keyboard & kbd, Mouse& mouse, float dt)
 			checkOut(ps);
 		}
 		Vec2 vel(0.0f, 0.0f);
+
 		if (kbd.KeyIsPressed(VK_RIGHT))
 		{
 			vel.x += 1.0f;
@@ -916,11 +932,20 @@ void Soldier::Update(Keyboard & kbd, Mouse& mouse, float dt)
 		}
 		pos += vel.GetNormalized() * speed * dt;
 		shield.pos += vel.GetNormalized() * speed * dt;
+		if (kbd.KeyIsPressed('A') && shield.checkNextPos(pos.x, Shield::Direction::Left))
+		{
+			shield.dir = Shield::Direction::Left;
+		}
+		else
+		{
+			if (kbd.KeyIsPressed('D') && shield.checkNextPos(pos.x + width, Shield::Direction::Right))
+			{
+				shield.dir = Shield::Direction::Right;
+			}
+		}
+		UpdateShield();
 	}
 }
-
-
-
 
 void Soldier::UpdateProj(float dt)
 {
@@ -932,9 +957,21 @@ void Soldier::UpdateProj(float dt)
 
 void Soldier::UpdateShield()
 {
-	shield.pos.x = pos.x - Shield::width;
-	shield.pos.y = pos.y + height / 3;
+	if (shield.dir != Shield::Direction::NotUsed)
+	{
+		switch (shield.dir)
+		{
+		case Shield::Direction::Left:
+			shield.pos.x = pos.x - Shield::width;
+			shield.pos.y = pos.y + height / 3;
+			break;
+		case Shield::Direction::Right:
+			shield.pos.x = pos.x + width;
+			shield.pos.y = pos.y + height / 3;
+		}
+	}
 }
+
 void Soldier::CheckAttack(Keyboard & kbd)
 {
 	if (kbd.KeyIsPressed(VK_NUMPAD4))
@@ -993,7 +1030,32 @@ void Soldier::CheckAttack(Mouse & mouse)
 	}
 }
 
-void Soldier::ClampToScreenLeft ()
+void Soldier::ClampToScreen()
+{
+	const float right = pos.x + width;
+	if (pos.x < 0.0f)
+	{
+		pos.x = 0.0f;
+	}
+
+	if (right >= Graphics::ScreenWidth)
+	{
+		pos.x = Graphics::ScreenWidth - 1 - width;
+	}
+
+	const float bottom = pos.y + height;
+	if (pos.y < 0.0f)
+	{
+		pos.y = 0.0f;
+	}
+
+	if (bottom >= Graphics::ScreenHeight)
+	{
+		pos.y = Graphics::ScreenHeight - 1 - height;
+	}
+}
+
+void Soldier::ClampToScreenLeft()
 {
 	const float right = pos.x + width;
 	const float shieldRight = shield.pos.x + Shield::width;
@@ -1015,13 +1077,39 @@ void Soldier::ClampToScreenLeft ()
 	const float bottom = pos.y + height;
 	const float shieldBottom = shield.pos.y + Shield::height;
 
-	if (pos.y < 0 )
+	if (pos.y < 0)
 	{
 		pos.y = 0;
 	}
-	else if (bottom >= float(Graphics::ScreenHeight) )
+	else if (bottom >= float(Graphics::ScreenHeight))
 	{
 		pos.y = float(Graphics::ScreenHeight - 1) - height;
 	}
-	UpdateShield();
+}
+
+void Soldier::ClampToScreenRight()
+{
+	const float shieldRight = shield.pos.x + Shield::width;
+	const float right = pos.x + width;
+	if (pos.x < 0.0f)
+	{
+		pos.x = 0.0f;
+	}
+	if (right + Shield::width + Shield::distance >= Graphics::ScreenWidth)
+	{
+		pos.x = Graphics::ScreenWidth - 1 - Shield::width - Shield::distance - width;
+	}
+
+	const float bottom = pos.y + height;
+
+	if (pos.y < 0.0f)
+	{
+		pos.y = 0.0f;
+	}
+
+	if (bottom > Graphics::ScreenHeight)
+	{
+		pos.y = Graphics::ScreenHeight - 1 - height;
+	}
+	
 }

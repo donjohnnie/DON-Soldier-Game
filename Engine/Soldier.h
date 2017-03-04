@@ -26,7 +26,9 @@ public:
 	void UpdateShield();
 	void CheckAttack(Keyboard& kbd);
 	void CheckAttack(Mouse& mouse);
+	void ClampToScreen();
 	void ClampToScreenLeft();
+	void ClampToScreenRight();
 
 	// Utility Functions;
 	Vec2 GetCenter() const { return Vec2(pos.x + width / 2, pos.y + height / 2); }
@@ -46,7 +48,7 @@ private:
 
 	Vec2 pos = Vec2(500.0f,500.0f);
 	std::vector<Projectile> ps;
-	Shield shield = Vec2(0.0f, 0.0f);
+	Shield shield;
 
 	bool dead = false;
 };
