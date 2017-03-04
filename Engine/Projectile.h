@@ -22,7 +22,7 @@ public:
 	void setOut() { out = true; }
 	bool isOut() const { return out; }
 	bool isDodged() const { return dodged; }
-	RectF GetRect() const { return RectF::FromCenter(pos, width, height); }
+	RectF GetRect() const { return RectF::MakeRect(pos, width, height); }
 	Vec2 getPos() const { return pos; }
 	Vec2 getVel() const { return vel; }
 

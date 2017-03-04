@@ -27,7 +27,6 @@ private:
 	static constexpr float height = 24.0f;
 	static constexpr float distance = 5.0f;
 	Vec2 pos;
-
 	Direction dir = Direction::NotUsed;
 
 };
