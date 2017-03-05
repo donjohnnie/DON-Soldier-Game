@@ -7,10 +7,17 @@
 #include "Colors.h"
 #include "Projectile.h"
 #include "Shield.h"
+#include "Crate.h"
 #include <vector>
 
 class Soldier
 {
+	enum class Weapon
+	{
+		Pistol,
+		AssaultRifle
+	};
+
 	friend class Enemy;
 public:
 	Soldier() = default;
@@ -19,6 +26,8 @@ public:
 
 	// Update & Draw Functions;
 	void Draw(Graphics& gfx) const;
+	void DrawWithRifle(Graphics& gfx) const;
+	void DrawWithPistol(Graphics& gfx) const;
 	void DrawProj(Graphics& gfx) const;
 	void DrawShield(Graphics& gfx) const;
 	void Update(Keyboard& kbd, Mouse& mouse, float dt);
@@ -26,9 +35,14 @@ public:
 	void UpdateShield();
 	void CheckAttack(Keyboard& kbd);
 	void CheckAttack(Mouse& mouse);
+	void ChangeWeapon();
 	void ClampToScreen();
 	void ClampToScreenLeft();
 	void ClampToScreenRight();
+
+	void Restart();
+
+	void HitCrate(Crate& c);
 
 	// Utility Functions;
 	Vec2 GetCenter() const { return Vec2(pos.x + width / 2, pos.y + height / 2); }
@@ -39,16 +53,17 @@ public:
 	void setDead() { dead = true; }
 
 private:
-	static constexpr float cooldown = 0.5f;
+	float cooldown = 1.3f;
 	float actual = 0.0f;
 	static constexpr Color c = Colors::Red;
-	static constexpr float speed = 100.0f;
+	static constexpr float speed = 130.0f;
 	static constexpr float width = 36.0f;
 	static constexpr float height = 49.0f;
 
 	Vec2 pos = Vec2(500.0f,500.0f);
 	std::vector<Projectile> ps;
 	Shield shield;
+	Weapon weapon = Weapon::Pistol;
 
 	bool dead = false;
 };

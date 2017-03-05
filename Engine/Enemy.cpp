@@ -1152,14 +1152,21 @@ void Enemy::HitSoldier(Soldier & sol)
 	}
 }
 
+void Enemy::HitCrate(Crate & c) const
+{
+	if (GetRect().IsOverlappingWith(c.GetRect()))
+	{
+		c.setActivated();
+	}
+}
+
 void Enemy::evade(Soldier& sol)
 {
 	if (dodgeCheck() && !isHit())
 	{
 		for (auto& el : sol.bullets())
 		{
-			if (!el.isDodged() && (el.getPos() - pos).GetLengthSq() <= 90.0f*90.0f
-				&& !((el.getVel().y < 0 && vel.y < 0) || (el.getVel().y > 0 && vel.y > 0))) // now they shouldn't be able to dodge if you get a dick shot
+			if (!el.isDodged() && (el.getPos() - pos).GetLengthSq() <= 105.0f*105.0f)
 			{
 				setDodgeFalse(); // enemy can't dodge again until it hits the wall;
 				el.setDodged(); // can't touch this (this bullet is now undodgeable [is that even a word?, well it is now])
@@ -1190,4 +1197,36 @@ bool verifySucces(std::vector<Enemy>& v)
 			}
 		}
 		return false;
+}
+
+bool checkGameWon(std::vector<Enemy>& v)
+{
+	for (auto& el : v)
+	{
+		if (!el.isHit())
+		{
+			return false;
+		}
+	}
+	return true;
+}
+
+void restartEnemies(std::vector<Enemy>& v)
+{
+	std::random_device e;
+	std::mt19937 rng(e());
+	std::uniform_real_distribution<float> xDist(50,500);
+	std::uniform_real_distribution<float> yDist(50, 500);
+	std::uniform_real_distribution<float> vDist(5.0f, 7.0f);
+
+	for(auto& el : v)
+	{
+		for (auto& el2 : el.ps)
+		{
+			el2.setOut();
+		}
+		el = Enemy(Vec2(xDist(rng), yDist(rng)), Vec2(vDist(rng), vDist(rng)));
+		el.hit = false;
+		el.setDodgeTrue();
+	}
 }

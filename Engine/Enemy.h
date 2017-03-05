@@ -7,6 +7,8 @@
 class Enemy
 {
 	friend bool verifySucces(std::vector<Enemy>& v);
+	friend bool checkGameWon(std::vector<Enemy>& v);
+	friend void restartEnemies(std::vector<Enemy>& v);
 public:
 	Enemy() = default;
 	Enemy(const Vec2& v1, const Vec2& v2) : pos(v1), vel(v2) { }
@@ -18,6 +20,7 @@ public:
 	void UpdateProj(float dt);
 	void Hit(Soldier& sol);
 	void HitSoldier(Soldier& sol);
+	void HitCrate(Crate& c) const;
 
 	void evade(Soldier& sol);
 

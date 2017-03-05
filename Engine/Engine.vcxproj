@@ -139,7 +139,9 @@
     <ClInclude Include="ChiliException.h" />
     <ClInclude Include="ChiliWin.h" />
     <ClInclude Include="Colors.h" />
+    <ClInclude Include="Crate.h" />
     <ClInclude Include="DXErr.h" />
+    <ClInclude Include="Endgame.h" />
     <ClInclude Include="Enemy.h" />
     <ClInclude Include="FrameTimer.h" />
     <ClInclude Include="Game.h" />
@@ -159,7 +161,9 @@
     <ClInclude Include="Vec2.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Crate.cpp" />
     <ClCompile Include="DXErr.cpp" />
+    <ClCompile Include="Endgame.cpp" />
     <ClCompile Include="Enemy.cpp" />
     <ClCompile Include="FrameTimer.cpp" />
     <ClCompile Include="Game.cpp" />

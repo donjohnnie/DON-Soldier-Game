@@ -28,6 +28,8 @@
 #include "Projectile.h"
 #include "Enemy.h"
 #include <random>
+#include "Crate.h"
+#include "Endgame.h"
 
 
 class Game
@@ -42,9 +44,12 @@ private:
 	void UpdateModel();
 	/********************************/
 	/*  User Functions              */
+
+	void Restart();
+
 	/********************************/
 private:
-	static constexpr int enemyNum = 3;
+	static constexpr int enemyNum = 4;
 	FrameTimer ft;
 	std::random_device e;
 	std::mt19937 rng;
@@ -52,6 +57,8 @@ private:
 	std::uniform_real_distribution<float> yDist;
 	Soldier soldier;
 	std::vector<Enemy> enemies;
+	Crate crate;
+	Endgame end;
 	MainWindow& wnd;
 	Graphics gfx;
 	// Soldier soldier;

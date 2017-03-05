@@ -27,7 +27,8 @@ Game::Game(MainWindow& wnd)
 	gfx(wnd),
 	xDist(50,500),
 	yDist(50,500),
-	rng(e())
+	rng(e()),
+	end(Vec2(335,150))
 {
 	std::uniform_real_distribution<float> vDist(5.0f, 7.0f);
 	for (int i = 0; i < enemyNum; i++)
@@ -46,33 +47,56 @@ void Game::Go()
 
 void Game::UpdateModel()
 {
-	if (!verifySucces(enemies))
+	if (!verifySucces(enemies) && !checkGameWon(enemies))
 	{
 		const auto dt = ft.Mark();
 		soldier.Update(wnd.kbd, wnd.mouse, dt);
+		crate.UpdateTime(dt);
 		soldier.UpdateProj(dt);
+		soldier.HitCrate(crate);
 		for (auto& el : enemies)
 		{
 			el.Update(dt, soldier);
 			el.Hit(soldier);
 			el.HitSoldier(soldier);
+			el.HitCrate(crate);
 			el.UpdateProj(dt);
 			el.evade(soldier);
 		}
 	}
+	else
+	{
+		if (wnd.kbd.KeyIsPressed(VK_RETURN))
+		{
+			Restart();
+		}
+	}
+}
+
+void Game::Restart()
+{
+	soldier.Restart();
+	restartEnemies(enemies);
+	crate.Restart();
 }
 
 void Game::ComposeFrame()
 {
-	if (!verifySucces(enemies))
+	soldier.Draw(gfx);
+	crate.Draw(gfx);
+	soldier.DrawShield(gfx);
+	soldier.DrawProj(gfx);
+	for (auto& el : enemies)
 	{
-		soldier.Draw(gfx);
-		soldier.DrawShield(gfx);
-		soldier.DrawProj(gfx);
-		for (auto& el : enemies)
-		{
-			el.Draw(gfx);
-			el.DrawProj(gfx);
-		}
+		el.Draw(gfx);
+		el.DrawProj(gfx);
+	}
+	if (checkGameWon(enemies))
+	{
+		end.DrawGameWon(gfx);
+	}
+	else if (verifySucces(enemies))
+	{
+		end.DrawGameLost(gfx);
 	}
 }
