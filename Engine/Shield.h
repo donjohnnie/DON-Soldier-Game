@@ -16,6 +16,8 @@ public:
 	Shield(const Vec2& vec) : pos(vec) { }
 
 	void Draw(Graphics& gfx) const;
+	
+	void Restart();
 
 	bool checkNextPos(float pos, Direction wanted) const;
 

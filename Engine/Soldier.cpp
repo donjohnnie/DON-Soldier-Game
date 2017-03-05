@@ -2024,6 +2024,7 @@ void Soldier::Restart()
 	dead = false;
 	cooldown = 1.3f;
 	weapon = Weapon::Pistol;
+	shield.Restart();
 	for (auto& el : ps)
 	{
 		el.setOut();

@@ -414,6 +414,12 @@ void Shield::Draw(Graphics & gfx) const
 
 }
 
+void Shield::Restart()
+{
+	pos = Vec2();
+	dir = Direction::NotUsed;
+}
+
 bool Shield::checkNextPos(float pos, Direction wanted) const
 {
 	switch (wanted)
