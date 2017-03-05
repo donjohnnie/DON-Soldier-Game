@@ -26,7 +26,7 @@ Game::Game(MainWindow& wnd)
 	wnd(wnd),
 	gfx(wnd),
 	xDist(50,500),
-	yDist(50,500),
+	yDist(50,150),
 	rng(e()),
 	end(Vec2(335,150))
 {

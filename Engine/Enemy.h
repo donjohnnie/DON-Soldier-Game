@@ -21,7 +21,6 @@ public:
 	void Hit(Soldier& sol);
 	void HitSoldier(Soldier& sol);
 	void HitCrate(Crate& c) const;
-
 	void evade(Soldier& sol);
 
 	// Utility Functions;
