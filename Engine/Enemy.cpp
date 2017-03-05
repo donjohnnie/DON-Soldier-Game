@@ -1216,7 +1216,7 @@ void restartEnemies(std::vector<Enemy>& v)
 	std::random_device e;
 	std::mt19937 rng(e());
 	std::uniform_real_distribution<float> xDist(50,500);
-	std::uniform_real_distribution<float> yDist(50, 500);
+	std::uniform_real_distribution<float> yDist(50, 150);
 	std::uniform_real_distribution<float> vDist(5.0f, 7.0f);
 
 	for(auto& el : v)

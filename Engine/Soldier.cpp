@@ -2024,7 +2024,10 @@ void Soldier::Restart()
 	dead = false;
 	cooldown = 1.3f;
 	weapon = Weapon::Pistol;
-	ps = std::vector<Projectile>();
+	for (auto& el : ps)
+	{
+		el.setOut();
+	}
 	pos = Vec2(500.0f, 500.0f);
 }
 

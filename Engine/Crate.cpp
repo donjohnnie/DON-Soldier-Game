@@ -614,6 +614,5 @@ void Crate::setOnScreen()
 	std::mt19937 rng(e());
 	std::uniform_real_distribution<float> xDist(25, 600);
 	std::uniform_real_distribution<float> yDist(25, 200);
-
 	pos = Vec2(xDist(rng), yDist(rng));
 }
