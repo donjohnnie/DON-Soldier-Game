@@ -7,8 +7,11 @@
 #include "Colors.h"
 #include "Projectile.h"
 #include "Shield.h"
+#include "Health.h"
 #include "Crate.h"
 #include <vector>
+
+
 
 class Soldier
 {
@@ -19,6 +22,7 @@ class Soldier
 	};
 
 	friend class Enemy;
+	friend class Health;
 public:
 	Soldier() = default;
 	Soldier(Vec2& in) : pos(in) { }
@@ -30,6 +34,7 @@ public:
 	void DrawWithPistol(Graphics& gfx) const;
 	void DrawProj(Graphics& gfx) const;
 	void DrawShield(Graphics& gfx) const;
+	void DrawHealth(Graphics& gfx) const;
 	void Update(Keyboard& kbd, Mouse& mouse, float dt);
 	void UpdateProj(float dt);
 	void UpdateShield();
@@ -41,6 +46,7 @@ public:
 	void ClampToScreenRight();
 
 	void Restart();
+	void minusHp();
 
 	void HitCrate(Crate& c);
 
@@ -49,8 +55,9 @@ public:
 	const RectF GetRect() const { return RectF::MakeRect(pos, width, height); }
 	std::vector<Projectile>& bullets() { return ps; }
 
-	bool isDead() const { return dead; }
+	bool isDead() const { return health == 0; }
 	void setDead() { dead = true; }
+	
 
 private:
 	float cooldown = 1.3f;
@@ -61,6 +68,7 @@ private:
 	static constexpr float height = 49.0f;
 
 	Vec2 pos = Vec2(500.0f,500.0f);
+	Health health;
 	std::vector<Projectile> ps;
 	Shield shield;
 	Weapon weapon = Weapon::Pistol;

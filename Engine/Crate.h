@@ -21,7 +21,7 @@ public:
 	bool getState() const { return !activated && onScreen; }
 
 private:
-	static constexpr float activationTime = 10.0f;
+	static constexpr float activationTime = 30.0f;
 	static constexpr float width = 24.0f;
 	static constexpr float height = 24.0f;
 	float totalTime = 0.0f;

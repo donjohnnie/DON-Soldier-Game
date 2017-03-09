@@ -47,7 +47,7 @@ void Game::Go()
 
 void Game::UpdateModel()
 {
-	if (!verifySucces(enemies) && !checkGameWon(enemies))
+	if (!soldier.isDead() && !checkGameWon(enemies))
 	{
 		const auto dt = ft.Mark();
 		soldier.Update(wnd.kbd, wnd.mouse, dt);
@@ -83,6 +83,7 @@ void Game::Restart()
 void Game::ComposeFrame()
 {
 	soldier.Draw(gfx);
+	soldier.DrawHealth(gfx);
 	crate.Draw(gfx);
 	soldier.DrawShield(gfx);
 	soldier.DrawProj(gfx);
@@ -90,12 +91,13 @@ void Game::ComposeFrame()
 	{
 		el.Draw(gfx);
 		el.DrawProj(gfx);
+		el.DrawHealth(gfx);
 	}
 	if (checkGameWon(enemies))
 	{
 		end.DrawGameWon(gfx);
 	}
-	else if (verifySucces(enemies))
+	else if (soldier.isDead())
 	{
 		end.DrawGameLost(gfx);
 	}

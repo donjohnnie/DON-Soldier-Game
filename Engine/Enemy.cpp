@@ -2,7 +2,7 @@
 
 void Enemy::Draw(Graphics & gfx) const
 {
-	if (!isHit())
+	if (!isDead())
 	{
 		const int in_x = int(pos.x);
 		const int in_y = int(pos.y);
@@ -1060,7 +1060,7 @@ void Enemy::DrawProj(Graphics & gfx) const
 
 void Enemy::Update(float dt, const Soldier& s)
 {
-	if (!isHit())
+	if (!isDead())
 	{
 		pos += vel * dt * speed;
 		if (!ps.empty())
@@ -1121,13 +1121,13 @@ void Enemy::UpdateProj(float dt)
 
 void Enemy::Hit(Soldier& sol)
 {
-	if (!isHit())
+	if (!isDead())
 	{
 		for (auto& el : sol.bullets())
 		{
 			if (el.GetRect().IsOverlappingWith(GetRect()))
 			{
-				hit = true;
+				minusHp();
 				el.setOut();
 				return;
 			}
@@ -1137,13 +1137,14 @@ void Enemy::Hit(Soldier& sol)
 
 void Enemy::HitSoldier(Soldier & sol)
 {
-	if (!isHit())
+	if (!isDead())
 	{
 		for (auto& el : ps)
 		{
 			if (el.GetRect().IsOverlappingWith(sol.GetRect()))
 			{
 				sol.setDead();
+				sol.minusHp();
 				el.setOut();
 				setSucces();
 				return;
@@ -1162,7 +1163,7 @@ void Enemy::HitCrate(Crate & c) const
 
 void Enemy::evade(Soldier& sol)
 {
-	if (dodgeCheck() && !isHit())
+	if (dodgeCheck() && !isDead())
 	{
 		for (auto& el : sol.bullets())
 		{
@@ -1187,6 +1188,11 @@ void Enemy::setDodgeFalse()
 	canDodge = false;
 }
 
+void Enemy::minusHp()
+{
+	health.decrease();
+}
+
 bool verifySucces(std::vector<Enemy>& v)
 {
 		for (auto& el : v)
@@ -1203,7 +1209,7 @@ bool checkGameWon(std::vector<Enemy>& v)
 {
 	for (auto& el : v)
 	{
-		if (!el.isHit())
+		if (!el.isDead())
 		{
 			return false;
 		}
@@ -1227,6 +1233,15 @@ void restartEnemies(std::vector<Enemy>& v)
 		}
 		el = Enemy(Vec2(xDist(rng), yDist(rng)), Vec2(vDist(rng), vDist(rng)));
 		el.hit = false;
+		el.health = Health(2);
 		el.setDodgeTrue();
+	}
+}
+
+void Enemy::DrawHealth(Graphics & gfx) const
+{
+	if ( pos.y - health.getHeight() > 0.0f && pos.x > 0.0f )
+	{
+		gfx.DrawRect(int(pos.x), int(pos.y - 5), int(pos.x + health.getWidth()), int(pos.y + health.getHeight() - 5), Colors::Cyan);
 	}
 }

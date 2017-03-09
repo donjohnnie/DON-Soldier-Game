@@ -1,4 +1,5 @@
 #include "Soldier.h"
+#include "Enemy.h"
 
 void Soldier::Draw(Graphics & gfx) const
 {
@@ -1758,6 +1759,7 @@ void Soldier::DrawWithPistol(Graphics & gfx) const
 }
 
 
+
 void Soldier::DrawProj(Graphics & gfx) const
 {
 	for (auto& el : ps)
@@ -1771,6 +1773,14 @@ void Soldier::DrawShield(Graphics & gfx) const
 	if (shield.dir != Shield::Direction::NotUsed)
 	{
 		shield.Draw(gfx);
+	}
+}
+
+void Soldier::DrawHealth(Graphics & gfx) const
+{
+	if (pos.y - health.getHeight() > 0.0f && pos.x > 0.0f)
+	{
+		gfx.DrawRect(int(pos.x), int(pos.y - 5), int(pos.x + health.getWidth()), int(pos.y + health.getHeight() - 5), Colors::Red);
 	}
 }
 
@@ -2024,12 +2034,18 @@ void Soldier::Restart()
 	dead = false;
 	cooldown = 1.3f;
 	weapon = Weapon::Pistol;
+	health = Health();
 	shield.Restart();
 	for (auto& el : ps)
 	{
 		el.setOut();
 	}
 	pos = Vec2(500.0f, 500.0f);
+}
+
+void Soldier::minusHp()
+{
+	health.decrease();
 }
 
 void Soldier::HitCrate(Crate & c)
