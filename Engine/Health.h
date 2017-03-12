@@ -11,7 +11,10 @@ public:
 
 	void decrease() { if (hp != 0) hp--; }
 
-	bool operator==(const int& n) const;
+	bool operator==(const int& n) const
+	{
+		return hp == n;
+	}
 
 	int getWidth() const { return int(width * hp); }
 	int getHeight() const { return int(height); }

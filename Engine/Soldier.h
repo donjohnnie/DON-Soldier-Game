@@ -28,6 +28,8 @@ public:
 	Soldier(Vec2& in) : pos(in) { }
 	Soldier(const float& xx, const float& yy) :Soldier(Vec2(xx, yy)) { }
 
+	Soldier& operator--();
+
 	// Update & Draw Functions;
 	void Draw(Graphics& gfx) const;
 	void DrawWithRifle(Graphics& gfx) const;
@@ -46,8 +48,6 @@ public:
 	void ClampToScreenRight();
 
 	void Restart();
-	void minusHp();
-
 	void HitCrate(Crate& c);
 
 	// Utility Functions;
@@ -55,7 +55,7 @@ public:
 	const RectF GetRect() const { return RectF::MakeRect(pos, width, height); }
 	std::vector<Projectile>& bullets() { return ps; }
 
-	bool isDead() const { return health == 0; }
+	inline bool isDead() const { return health == 0; }
 	void setDead() { dead = true; }
 	
 

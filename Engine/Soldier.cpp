@@ -1,6 +1,12 @@
 #include "Soldier.h"
 #include "Enemy.h"
 
+Soldier& Soldier::operator--()
+{
+	health.decrease();
+	return *this;
+}
+
 void Soldier::Draw(Graphics & gfx) const
 {
 	switch (weapon)
@@ -2043,10 +2049,6 @@ void Soldier::Restart()
 	pos = Vec2(500.0f, 500.0f);
 }
 
-void Soldier::minusHp()
-{
-	health.decrease();
-}
 
 void Soldier::HitCrate(Crate & c)
 {

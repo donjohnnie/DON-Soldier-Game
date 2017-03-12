@@ -18,7 +18,7 @@ public:
 	void setOnScreen();
 
 	RectF GetRect() const { return RectF::MakeRect(pos, width, height); }
-	bool getState() const { return !activated && onScreen; }
+	inline bool getState() const { return !activated && onScreen; }
 
 private:
 	static constexpr float activationTime = 30.0f;

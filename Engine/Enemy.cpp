@@ -1,5 +1,12 @@
 #include "Enemy.h"
 
+
+Enemy& Enemy::operator--()
+{
+	health.decrease();
+	return *this;
+}
+
 void Enemy::Draw(Graphics & gfx) const
 {
 	if (!isDead())
@@ -1127,7 +1134,7 @@ void Enemy::Hit(Soldier& sol)
 		{
 			if (el.GetRect().IsOverlappingWith(GetRect()))
 			{
-				minusHp();
+				--*this;
 				el.setOut();
 				return;
 			}
@@ -1144,7 +1151,7 @@ void Enemy::HitSoldier(Soldier & sol)
 			if (el.GetRect().IsOverlappingWith(sol.GetRect()))
 			{
 				sol.setDead();
-				sol.minusHp();
+				--sol;
 				el.setOut();
 				setSucces();
 				return;
@@ -1188,10 +1195,6 @@ void Enemy::setDodgeFalse()
 	canDodge = false;
 }
 
-void Enemy::minusHp()
-{
-	health.decrease();
-}
 
 bool verifySucces(std::vector<Enemy>& v)
 {

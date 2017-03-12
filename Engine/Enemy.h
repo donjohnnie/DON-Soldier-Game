@@ -13,6 +13,8 @@ public:
 	Enemy() = default;
 	Enemy(const Vec2& v1, const Vec2& v2) : pos(v1), vel(v2) { }
 
+	Enemy& operator--();
+
 	// Update & Draw Functions;
 	void Draw(Graphics& gfx) const;
 	void DrawProj(Graphics& gfx) const;
@@ -27,7 +29,6 @@ public:
 	// Utility Functions;
 	void setDodgeTrue();
 	void setDodgeFalse();
-	void minusHp();
 	bool dodgeCheck() const { return canDodge; }
 	bool isDead() const { return health == 0; }
 	void setSucces() { succes = true; }
